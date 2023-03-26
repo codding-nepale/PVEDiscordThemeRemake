@@ -149,7 +149,8 @@ function install {
             rm -rf /usr/share/javascript/proxmox-widget-toolkit/images
         fi
         cd /usr/share/javascript/proxmox-widget-toolkit && wget -q https://github.com/codding-nepale/PVEDiscordThemeRemake/raw/main/PVEDiscordTheme/images/images.zip
-        if [ -x "$(command -v unzip)" ]; then
+        echo -e "cd ok"
+	if [ -x "$(command -v unzip)" ]; then
             unzip -q images.zip
             rm images.zip
         else
