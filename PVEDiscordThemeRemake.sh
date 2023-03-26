@@ -139,9 +139,9 @@ function status {
 
 function isInstalled {
     if [ "$OFFLINE" = false ]; then
-        local DIFF=$(diff <(curl -s $BASE_URL/PVEDiscordTheme/css/theme-proxmox-discord-dark.css) <(cat /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css))
+        local DIFF=$(diff <(curl -s $BASE_URL/PVEDiscordTheme/js/proxmoxlib.js) <(cat /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js))
     else
-        local DIFF=$(diff <(cat "$OFFLINEDIR/PVEDiscordTheme/css/theme-proxmox-discord-dark.css") <(cat /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css))
+        local DIFF=$(diff <(cat "$OFFLINEDIR/PVEDiscordTheme/js/proxmoxlib.js") <(cat /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js))
     fi
 }
 
@@ -151,7 +151,6 @@ function install {
         exit 2
     else
         if [ "$_silent" = false ]; then echo -e "${GRN}Installing theme${REG}"; fi
-        # create backup of original files
         if [ -f /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css ]; then
             cp /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css.bak
         fi
