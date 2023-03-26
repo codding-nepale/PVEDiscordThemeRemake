@@ -137,50 +137,37 @@ function status {
     if isInstalled; then exit 0; else exit 1; fi
 }
 
-function isInstalled {
-    if [ "$OFFLINE" = false ]; then
-        local DIFF=$(diff <(curl -s $BASE_URL/PVEDiscordTheme/js/proxmoxlib.js) <(cat /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js))
-    else
-        local DIFF=$(diff <(cat "$OFFLINEDIR/PVEDiscordTheme/js/proxmoxlib.js") <(cat /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js))
-    fi
-}
-
 function install {
-    if isInstalled; then
-        if [ "$_silent" = false ]; then echo -e "${RED}Theme already installed${REG}"; fi
-        exit 2
-    else
-        if [ "$_silent" = false ]; then echo -e "${GRN}Installing theme${REG}"; fi
-        if [ -f /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css ]; then
-            cp /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css.bak
-        fi
-        if [ -f /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js ]; then
-            cp /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak
-        fi
-        if [ -d /usr/share/javascript/proxmox-widget-toolkit/images ]; then
-            cp -r /usr/share/javascript/proxmox-widget-toolkit/images /usr/share/javascript/proxmox-widget-toolkit/images.bak
-        fi
-        if [ "$OFFLINE" = false ]; then
-            curl -s $BASE_URL/PVEDiscordTheme/css/theme-proxmox-discord-dark.css > /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css
-            curl -s $BASE_URL/PVEDiscordTheme/js/proxmoxlib.js > /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
-            if [ -d "/usr/share/javascript/proxmox-widget-toolkit/images" ]; then
-                rm -rf /usr/share/javascript/proxmox-widget-toolkit/images
-            fi
-            $old_cwd=$(pwd)
-            cd /usr/share/javascript/proxmox-widget-toolkit && wget -q https://github.com/codding-nepale/PVEDiscordThemeRemake/raw/main/PVEDiscordTheme/images/images.zip
-            if [ -x "$(command -v unzip)" ]; then
-                unzip -q images.zip
-                rm images.zip
-            else
-                apt-get install unzip -y -qq
-                unzip -q images.zip
-                rm images.zip
-                apt-get purge unzip -y -qq
-            fi
-            cd $old_cwd
-        fi
-        if [ "$_silent" = false ]; then echo -e "${GRN}Theme installed${REG}"; fi
+    if [ "$_silent" = false ]; then echo -e "${GRN}Installing theme${REG}"; fi
+    if [ -f /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css ]; then
+        cp /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css.bak
     fi
+    if [ -f /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js ]; then
+        cp /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak
+    fi
+    if [ -d /usr/share/javascript/proxmox-widget-toolkit/images ]; then
+        cp -r /usr/share/javascript/proxmox-widget-toolkit/images /usr/share/javascript/proxmox-widget-toolkit/images.bak
+    fi
+    if [ "$OFFLINE" = false ]; then
+        curl -s $BASE_URL/PVEDiscordTheme/css/theme-proxmox-discord-dark.css > /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css
+        curl -s $BASE_URL/PVEDiscordTheme/js/proxmoxlib.js > /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+        if [ -d "/usr/share/javascript/proxmox-widget-toolkit/images" ]; then
+            rm -rf /usr/share/javascript/proxmox-widget-toolkit/images
+        fi
+        $old_cwd=$(pwd)
+        cd /usr/share/javascript/proxmox-widget-toolkit && wget -q https://github.com/codding-nepale/PVEDiscordThemeRemake/raw/main/PVEDiscordTheme/images/images.zip
+        if [ -x "$(command -v unzip)" ]; then
+            unzip -q images.zip
+            rm images.zip
+        else
+            apt-get install unzip -y -qq
+            unzip -q images.zip
+            rm images.zip
+            apt-get purge unzip -y -qq
+        fi
+        cd $old_cwd
+    fi
+    if [ "$_silent" = false ]; then echo -e "${GRN}Theme installed${REG}"; fi
 }
 
 function uninstall {
