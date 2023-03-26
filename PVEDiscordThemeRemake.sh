@@ -142,6 +142,9 @@ function install {
     if [ -d /usr/share/javascript/proxmox-widget-toolkit/images ]; then
         cp -r /usr/share/javascript/proxmox-widget-toolkit/images /usr/share/javascript/proxmox-widget-toolkit/images.bak
     fi
+    if [ -f $TEMPLATE_FILE ]; then
+        cp $TEMPLATE_FILE $TEMPLATE_FILE.bak
+    fi
     if [ "$OFFLINE" = false ]; then
         curl -s $BASE_URL/PVEDiscordTheme/css/theme-proxmox-discord-dark.css > /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css
         curl -s $BASE_URL/PVEDiscordTheme/js/proxmoxlib.js > /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
@@ -172,6 +175,12 @@ function uninstall {
             echo -e "${RED}Warning: ${REG}Could not find backup of proxmoxlib.js. Please check if the file /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js exists and contains the original proxmoxlib.js."
             $failed_proxmoxlib=true
         fi
+	if [ -f $TEMPLATE_FILE.bak ]; then
+            mv $TEMPLATE_FILE.bak $TEMPLATE_FILE
+        else
+            echo -e "${RED}Warning: ${REG}Could not find backup of index.html.tpl. Please check if the file $TEMPLATE_FILE exists and contains the original index.html.tpl."
+            $failed_tpl=true
+        fi
         if [ -d /usr/share/javascript/proxmox-widget-toolkit/images.bak ]; then
             rm -rf /usr/share/javascript/proxmox-widget-toolkit/images
             mv /usr/share/javascript/proxmox-widget-toolkit/images.bak /usr/share/javascript/proxmox-widget-toolkit/images
@@ -179,16 +188,19 @@ function uninstall {
             echo -e "${RED}Warning: ${REG}Could not find backup of images folder. Please check if the folder /usr/share/javascript/proxmox-widget-toolkit/images exists and contains the original images."
             $failed_images=true
         fi
-        if [ $failed_proxmoxlib = true ] || [ $failed_images = true ]; then
+        if [ $failed_proxmoxlib = true ] || [ $failed_images = true ] || [ $failed_tpl = true ]; then
             echo -e "${RED}Uninstall completed with error${REG}"
             if [ $failed_proxmoxlib = true ]; then
                 echo -e "${RED}proxmoxlib.js${REG} could not be restored. Please check if the file /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js exists and contains the original proxmoxlib.js."
+            fi
+	    if [ $failed_tpl = true ]; then
+                echo -e "${RED}index.html.tpl${REG} could not be restored. Please check if the file $TEMPLATE_FILE exists and contains the original index.html.tpl."
             fi
             if [ $failed_images = true ]; then
                 echo -e "${RED}images folder${REG} could not be restored. Please check if the folder /usr/share/javascript/proxmox-widget-toolkit/images exists and contains the original images."
             fi
         fi
-        if [ $failed_proxmoxlib = true ] && [ $failed_images = true ]; then
+        if [ $failed_proxmoxlib = true ] && [ $failed_images = true ] && [ $failed_tpl = true ]; then
             echo -e "${RED}Uninstall failed${REG}"
             exit 1
         fi
