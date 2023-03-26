@@ -122,11 +122,6 @@ function usage {
 function status {
     if [ "$_silent" = false ]; then
         echo -e "Theme"
-        if isInstalled; then
-            echo -e "  Status:      ${GRN}present${REG}"
-        else
-            echo -e "  Status:      ${RED}not present${REG}"
-        fi
         echo -e "  CSS:         $(sha256sum /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css 2>/dev/null  || echo N/A)"
         echo -e "  JS:          $(sha256sum /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js 2>/dev/null  || echo N/A)\n"
         echo -e "PVE"
@@ -134,7 +129,6 @@ function status {
         echo -e "Utility hash:  $(sha256sum $SCRIPTPATH 2>/dev/null  || echo N/A)"
         echo -e "Offline mode:  $OFFLINE"
     fi
-    if isInstalled; then exit 0; else exit 1; fi
 }
 
 function install {
@@ -171,7 +165,6 @@ function install {
 }
 
 function uninstall {
-    if isInstalled; then
         if [ "$_silent" = false ]; then echo -e "${GRN}Uninstalling theme${REG}"; fi
         rm -rf /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css
         if [ -f /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js.bak ]; then
@@ -201,10 +194,6 @@ function uninstall {
             exit 1
         fi
         if [ "$_silent" = false ]; then echo -e "${GRN}Theme uninstalled${REG}"; fi
-    else
-        if [ "$_silent" = false ]; then echo -e "${RED}Theme not installed${REG}"; fi
-        exit 2
-    fi
 }
 
 #endregion Main functions
@@ -266,3 +255,4 @@ parse_cli()
 }
 
 parse_cli "$@"
+=
