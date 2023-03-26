@@ -13,12 +13,12 @@ The theme now runs its own JavaScript code which patches the colors for certain 
 The installation is done via the CLI utility. Run the following commands on the PVE node serving the Web UI:  Clearing browser cache is necessary to see the changes.
 
 ```
-~# wget https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh
-~# bash PVEDiscordDark.sh install
+~# wget https://raw.githubusercontent.com/codding-nepale/PVEDiscordThemeRemake/main/PVEDiscordThemeRemake.sh
+~# bash PVEDiscordThemeRemake.sh install
 ```
 Or this oneliner
 ```
-bash <(curl -s https://raw.githubusercontent.com/Weilbyte/PVEDiscordDark/master/PVEDiscordDark.sh ) install
+bash <(curl -s https://raw.githubusercontent.com/codding-nepale/PVEDiscordThemeRemake/main/PVEDiscordThemeRemake.sh ) install
 ```
 
 Note that you will need to run the install command every time `pve-manager` is updated (i.e. after every Proxmox update)
