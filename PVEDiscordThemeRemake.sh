@@ -145,12 +145,12 @@ function install {
     if [ "$OFFLINE" = false ]; then
         curl -s $BASE_URL/PVEDiscordTheme/css/theme-proxmox-discord-dark.css > /usr/share/javascript/proxmox-widget-toolkit/themes/theme-proxmox-discord-dark.css
         curl -s $BASE_URL/PVEDiscordTheme/js/proxmoxlib.js > /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
+        curl -s $BASE_URL/PVEDiscordTheme/tpl/index.html.tpl > $TEMPLATE_FILE
         if [ -d "/usr/share/javascript/proxmox-widget-toolkit/images" ]; then
             rm -rf /usr/share/javascript/proxmox-widget-toolkit/images
         fi
-        cd /usr/share/javascript/proxmox-widget-toolkit && wget https://github.com/codding-nepale/PVEDiscordThemeRemake/raw/main/PVEDiscordTheme/images/images.zip
-        echo -e "cd ok"
-	if [ -x "$(command -v unzip)" ]; then
+        cd /usr/share/javascript/proxmox-widget-toolkit && wget -q https://github.com/codding-nepale/PVEDiscordThemeRemake/raw/main/PVEDiscordTheme/images/images.zip
+        if [ -x "$(command -v unzip)" ]; then
             unzip -q images.zip
             rm images.zip
         else
