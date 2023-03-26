@@ -19,7 +19,7 @@ SCRIPTPATH="${SCRIPTDIR}$(basename "${BASH_SOURCE[0]}")"
 OFFLINEDIR="${SCRIPTDIR}offline"
 
 REPO=${REPO:-"codding-nepale/PVEDiscordThemeRemake"}
-DEFAULT_TAG="master"
+DEFAULT_TAG="main"
 TAG=${TAG:-$DEFAULT_TAG}
 BASE_URL="https://raw.githubusercontent.com/$REPO/$TAG"
 
