@@ -27,10 +27,10 @@ Note that you will need to run the install command every time `pve-manager` is u
  To uninstall the theme, simply run the utility with the `uninstall` command. Clearing browser cache is necessary to see the changes.
  
 ## Installer & Security
-The new installer relies on the `/meta/supported` and `/meta/imagelist` files being present in the repository. It also includes a silent mode. Run `bash PVEDiscordDark.sh -h` for usage instructions. 
+The new installer relies on the `/meta/supported` files being present in the repository. It also includes a silent mode. Run `bash PVEDiscordThemeRemake.sh -h` for usage instructions. 
 
 Furthermore, you will be able to provide the environment variables `REPO` and `TAG` to specify from what repository and from what commit tag to install the theme from.   
-`REPO` is in format `Username/Repository` and defaults to `Weilbyte/PVEDiscordDark` (this repository).    
+`REPO` is in format `Username/Repository` and defaults to `codding-nepale/PVEDiscordThemeRemake` (this repository).    
 `TAG` defaults to `master`, but it is strongly recommended to use the SHA-1 commit hash for security.
 
 *Awoo'ing on this repo is encouraged.*
