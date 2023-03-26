@@ -148,7 +148,6 @@ function install {
         if [ -d "/usr/share/javascript/proxmox-widget-toolkit/images" ]; then
             rm -rf /usr/share/javascript/proxmox-widget-toolkit/images
         fi
-        $old_cwd=$(pwd)
         cd /usr/share/javascript/proxmox-widget-toolkit && wget -q https://github.com/codding-nepale/PVEDiscordThemeRemake/raw/main/PVEDiscordTheme/images/images.zip
         if [ -x "$(command -v unzip)" ]; then
             unzip -q images.zip
@@ -159,7 +158,6 @@ function install {
             rm images.zip
             apt-get purge unzip -y -qq
         fi
-        cd $old_cwd
     fi
     if [ "$_silent" = false ]; then echo -e "${GRN}Theme installed${REG}"; fi
 }
